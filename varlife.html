@@ -1,0 +1,110 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//Dli XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/Dli/xhtml11.dli">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+		<title>Variations of Life</title>
+		
+		
+		<!-- <link rel="stylesheet" type="text/css" href="/static/d3applets/dotandcross.css" /> -->
+		<style>
+			input { margin: 5px; }
+			span { border: 1px solid black; }
+			.rule {
+				border: 1px solid transparent;
+				display: inline-block;
+				padding: 3px;
+			}
+			.rule:hover { border: 1px solid gray; background-color: #FFFFCC; }
+			.picked { border: 1px solid black; background-color: #FFFFAA; }
+		</style>
+	</head>
+	
+	<body style="margin-left: 20px">
+	
+		<h1>Variations of Life</h1>
+		<p id="desc">A generic Game-of-Life-style simulator that allows mixing of rules.</p>
+		
+		<svg id="field">
+			<g id="blocks"></g>
+		</svg>
+		
+		<p>
+			<label for="onOffToggle">Live/dead toggle</label> <input type="radio" id="onOffToggle" name="paintKind" value="toggle" checked />
+			<label for="rulePick">Rule pick</label> <input type="radio" id="rulePick" name="paintKind" value="paint" />
+			
+			<br/>
+			
+			<button onclick="start()">Start</button>
+			<button onclick="stop()">Stop</button>
+			<button onclick="step()">Step</button>
+			<button onclick="clearGrid(0)">Clear</button>
+			<button onclick="clearGrid(1)">Reset</button> ||
+			<input type="number" id="numSteps" value="10" min="1" max="1000" />
+			<button onclick="fast()">Fast</button>
+			<button onclick="slow()">Slow</button>
+			
+			<br/>
+			
+			<button onclick="saveGrid()">Save grid</button>
+			<button onclick="loadGrid()">Load grid</button>
+			
+			<br/>
+			
+			Ticks per second: <input type="number" id="tps" value="5" min="1" max="100" /> &ndash;
+			Milliseconds per tick: <input type="number" id="mspt" value="200" min="10" max="1000" />
+			
+			<br/>
+			
+			Width: <input type="number" id="width" min="1" max="999" value="20" />
+			Height: <input type="number" id="height" min="1" max="999" value="20" />
+			Cell size: <input type="number" id="cellSize" min="4" max="100" value="10" />
+			
+			<br/>
+			
+			<label for="toroidal">Toroidal?</label> <input type="checkbox" id="toroidal"/>
+			( <label for="toroidalH">Horizontal</label> <input type="checkbox" id="toroidalH"/>
+			<label for="toroidalV">Vertical</label> <input type="checkbox" id="toroidalV"/> )
+			<br/>
+			Generation: <span id="generationCounter" style="border: 1px solid transparent">0</span>
+			
+			<br/><br/>
+			
+			<button onclick="setPermalink()">Set permalink</button>
+			<a href="#" id="permalink">Permalink</a> <br/>
+			<button onclick="loadPermalink()">Reload from permalink</button> <br/><br/>
+			<button onclick="renderGif()" id="renderGif">Render to gif</button> Steps:<input type="number" id="renderSteps" min="1" max="100" value="10"/> <br/>
+			<div id="rendered-gif"></div>
+		</p>
+		
+		<h2>Rules</h2>
+		
+		<div id="rules">
+			<p id="rule1" class="rule picked">
+				Rule: <input type="text" id="rule1text" value="B3/S23" />
+				<br/>
+				Dead color: <input type="text" id="rule1dead" value="#000000" size="6"/>
+				<input type="color" id="rule1deadcolor" value="#000000" />
+				<!-- <span style="background-color: #000000" id="rule1deadcolor">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
+				<br/>
+				Alive color: <input type="text" id="rule1alive" value="#FFFFFF" size="6"/>
+				<input type="color" id="rule1alivecolor" value="#FFFFFF" />
+				<!-- <span style="background-color: #FFFFFF" id="rule1alivecolor">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> -->
+				<br/>
+				Random/stochastic? <input type="checkbox" id="rule1random" />
+				<br/>
+				Birth: <input type="number" id="rule1birthprob" min="0" max="1" step="0.05" value="1" disabled /> <br/>
+				Survive: <input type="number" id="rule1surviveprob" min="0" max="1" step="0.05" value="1" disabled />
+			</p>
+		</div>
+		
+		<button onclick="addRule(-1)">Add rule</button>
+	
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.6/d3.min.js" charset="utf-8"></script>
+		<script src="/static/d3applets/varlife.js"></script>
+		
+	</body>
+</html>
